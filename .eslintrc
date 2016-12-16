@@ -1,0 +1,9 @@
+{
+  "extends": "eslint-config-airbnb",
+  "parser": "babel-eslint",
+  "rules": {
+    "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.spec.js"]}],
+    "no-console": "off"
+  }
+}
