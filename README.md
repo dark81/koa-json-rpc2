@@ -3,6 +3,7 @@ Yet another JSON-RPC2 middleware implementation for koa-js.
 
 ## Installation
 ```bash
+npm install koa-json-rpc2
 ```
 
 ## Usage
@@ -16,6 +17,14 @@ var jrpc2 = koaJsonRpc2();
 
 jrpc2.use('user', function* user() {
   return 'root'
+});
+
+jrpc2.use('sum', function* sum(params) {
+  return params.reduce(
+    function (prev, curr) {
+      return prev+curr;
+    },
+    0);
 });
 
 app.use(jrpc2.app());
