@@ -1,4 +1,7 @@
 # koa-json-rpc2
+[![NPM version](http://img.shields.io/npm/v/koa-json-rpc2.svg?style=flat)](https://npmjs.org/package/koa-json-rpc2)
+[![NPM Downloads](https://img.shields.io/npm/dm/koa-json-rpc2.svg?style=flat)](https://npmjs.org/package/koa-json-rpc2)
+[![Node.js Version](https://img.shields.io/node/v/koa-json-rpc2.svg?style=flat)](http://nodejs.org/download/)
 [![Build Status](https://travis-ci.org/dark81/koa-json-rpc2.svg?branch=master)](https://travis-ci.org/dark81/koa-json-rpc2)
 
 Yet another JSON-RPC2 middleware implementation for koa-js.
