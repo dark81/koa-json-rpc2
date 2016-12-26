@@ -1,4 +1,6 @@
 # koa-json-rpc2
+[![Build Status](https://travis-ci.org/dark81/koa-json-rpc2.svg?branch=master)](https://travis-ci.org/dark81/koa-json-rpc2)
+
 Yet another JSON-RPC2 middleware implementation for koa-js.
 
 ## Installation
