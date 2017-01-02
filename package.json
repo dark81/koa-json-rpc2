@@ -1,6 +1,6 @@
 {
   "name": "koa-json-rpc2",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "JSON-RPC2 middelware for koajs",
   "main": "index.js",
   "repository": {
