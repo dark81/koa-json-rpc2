@@ -49,8 +49,11 @@ For instance:
 DEBUG=koa-json-rpc2 npm server.js
 ```
 
+## History
+[HISTORY.md](HISTORY.md)
+
 ## Authors
 Dmytro Ryzhykov <dark81@gmail.com>
 
 ## License
-The MIT License
+[The MIT License](LICENSE)
