@@ -45,7 +45,7 @@ function koaJsonRpc2() {
           return;
         }
         debug('Request: %o', body);
-        var result = yield registry[body.method](body.params);
+        var result = yield registry[body.method].call(this, body.params);
         this.body = new JsonRpcResponse(
           body.id,
           null,

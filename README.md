@@ -35,6 +35,14 @@ jrpc2.use('sum', function* sum(params) {
     0);
 });
 
+// Add context information that's useful throughout the lifetime of application 
+app.context.some_string = 'context string';
+
+jrpc2.use('ctx', function* user() {
+  // Get access to context information inside rpc method
+  return this.app.context.some_string;
+});
+
 // Register rpc router as koa middleware
 app.use(jrpc2.app());
 

@@ -84,6 +84,18 @@ var sumResponce = {
   id: 3
 };
 
+var ctxQuery = {
+  jsonrpc: '2.0',
+  method: 'ctx',
+  id: 12
+};
+
+var ctxResponce = {
+  jsonrpc: '2.0',
+  result: 'context string',
+  id: 12
+};
+
 describe('koa-json-rpc2', function () {
   it('return parse error on non-json call', function (done) {
     request.post('/')
@@ -130,6 +142,14 @@ describe('koa-json-rpc2', function () {
       .send(sumQuery)
       .end(function(err, res){
         expect(JSON.parse(res.text)).to.be.deep.equal(sumResponce);
+        done();
+      });
+  });
+  it('have access to koa context passed to rpc method', function (done) {
+    request.post('/')
+      .send(ctxQuery)
+      .end(function(err, res){
+        expect(JSON.parse(res.text)).to.be.deep.equal(ctxResponce);
         done();
       });
   });
