@@ -4,6 +4,10 @@
   "rules": {
     "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
     "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.spec.js"]}],
-    "no-console": "off"
+    "no-console": "off",
+    "object-shorthand": "off",
+    "no-var": "off",
+    "require-yield": "off",
+    "prefer-arrow-callback": "off"
   }
 }

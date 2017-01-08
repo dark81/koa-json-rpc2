@@ -1,3 +1,5 @@
+/* eslint func-names: ["warn", "as-needed"] */
+
 var parse = require('co-body');
 var debug = require('debug')('koa-json-rpc2');
 var JsonRpcError = require('json-rpc-error');
@@ -16,8 +18,9 @@ function koaJsonRpc2() {
       registry[name] = func;
     },
     app: function () {
-      return function* rpcApp (next) {
+      return function* rpcApp() {
         var body;
+        var result;
         try {
           body = yield parse.json(this);
         }
@@ -29,8 +32,8 @@ function koaJsonRpc2() {
           return;
         }
         if (body.jsonrpc !== '2.0'
-          || !body.hasOwnProperty('method')
-          || !body.hasOwnProperty('id')) {
+          || !Object.prototype.hasOwnProperty.call(body, 'method')
+          || !Object.prototype.hasOwnProperty.call(body, 'id')) {
           debug('JSON is not correct JSON-RPC2 request: %O', body);
           this.body = new JsonRpcResponse(
             body.id || null,
@@ -45,14 +48,13 @@ function koaJsonRpc2() {
           return;
         }
         debug('Request: %o', body);
-        var result = yield registry[body.method].call(this, body.params);
+        result = yield registry[body.method].call(this, body.params);
         this.body = new JsonRpcResponse(
           body.id,
           null,
           result);
-        return;
-      }
-    }
+      };
+    },
   };
 }
 

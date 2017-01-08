@@ -1,4 +1,7 @@
+/* eslint import/no-extraneous-dependencies: "off" */
+
 var koa = require('koa');
+
 var app = module.exports = koa();
 
 var koaJsonRpc2 = require('../index');
@@ -10,8 +13,8 @@ jrpc2.use('user', function* user() {
 });
 
 jrpc2.use('sum', function* sum(params) {
-  return params.reduce(function (prev, curr) {
-    return prev+curr;
+  return params.reduce(function (prev, curr) { // eslint-disable-line
+    return prev + curr;
   },
     0);
 });
