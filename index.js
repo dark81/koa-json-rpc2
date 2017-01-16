@@ -13,7 +13,7 @@ function InvalidParamsError(message) {
   this.message = message;
   stack = (new Error()).stack.split('\n');
   if (message) {
-    caption = this.name + ': ' + message;
+    caption = this.name + ': ' + message; // eslint-disable-line
   }
   else {
     caption = this.name;
@@ -23,9 +23,9 @@ function InvalidParamsError(message) {
 }
 InvalidParamsError.prototype = Object.create(Error.prototype);
 InvalidParamsError.prototype.constructor = InvalidParamsError;
-InvalidParamsError.prototype.toString = function () {
+InvalidParamsError.prototype.toString = function toString() {
   return this.stack;
-}
+};
 
 function koaJsonRpc2() {
   var registry = Object.create(null);
