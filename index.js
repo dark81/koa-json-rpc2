@@ -48,11 +48,21 @@ function koaJsonRpc2() {
           return;
         }
         debug('Request: %o', body);
-        result = yield registry[body.method].call(this, body.params);
+        try {
+          result = yield registry[body.method].call(this, body.params);
+        }
+        catch (e) {
+          debug('In method "%s" error: "%s"', body.method, e.name);
+          this.body = new JsonRpcResponse(
+            body.id,
+            new JsonRpcError.InternalError(e.message));
+          return;
+        }
         this.body = new JsonRpcResponse(
           body.id,
           null,
           result);
+        debug('Response: %o', this.body);
       };
     },
   };

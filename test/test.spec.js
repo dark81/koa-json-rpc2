@@ -97,6 +97,21 @@ var ctxResponce = {
   id: 12,
 };
 
+var internalQuery = {
+  jsonrpc: '2.0',
+  method: 'internal',
+  id: 18,
+};
+
+var internalResponce = {
+  jsonrpc: '2.0',
+  error: {
+    code: -32603,
+    message: 'Internal error',
+  },
+  id: 18,
+};
+
 describe('koa-json-rpc2', function () {
   it('return parse error on non-json call', function (done) {
     request.post('/')
@@ -151,6 +166,14 @@ describe('koa-json-rpc2', function () {
       .send(ctxQuery)
       .end(function (err, res) {
         expect(JSON.parse(res.text)).to.be.deep.equal(ctxResponce);
+        done();
+      });
+  });
+  it('have return internal error as result of throw inside RPC method', function (done) {
+    request.post('/')
+      .send(internalQuery)
+      .end(function (err, res) {
+        expect(JSON.parse(res.text)).to.be.deep.equal(internalResponce);
         done();
       });
   });

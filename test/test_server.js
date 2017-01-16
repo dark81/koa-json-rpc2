@@ -19,6 +19,10 @@ jrpc2.use('sum', function* sum(params) {
     0);
 });
 
+jrpc2.use('internal', function* internal() {
+  throw new Error();
+});
+
 app.context.some_string = 'context string';
 
 jrpc2.use('ctx', function* user() {
