@@ -112,6 +112,36 @@ var internalResponce = {
   id: 18,
 };
 
+var checkParams1Query = {
+  jsonrpc: '2.0',
+  method: 'checkParams',
+  params: {
+    foo: 'bar',
+  },
+  id: 20,
+};
+
+var checkParams1Responce = {
+  jsonrpc: '2.0',
+  result: 'bar',
+  id: 20,
+};
+
+var checkParams2Query = {
+  jsonrpc: '2.0',
+  method: 'checkParams',
+  id: 21,
+};
+
+var checkParams2Responce = {
+  jsonrpc: '2.0',
+  error: {
+    code: -32602,
+    message: 'Invalid params',
+  },
+  id: 21,
+};
+
 describe('koa-json-rpc2', function () {
   it('return parse error on non-json call', function (done) {
     request.post('/')
@@ -174,6 +204,22 @@ describe('koa-json-rpc2', function () {
       .send(internalQuery)
       .end(function (err, res) {
         expect(JSON.parse(res.text)).to.be.deep.equal(internalResponce);
+        done();
+      });
+  });
+  it('have return result for correct parameters', function (done) {
+    request.post('/')
+      .send(checkParams1Query)
+      .end(function (err, res) {
+        expect(JSON.parse(res.text)).to.be.deep.equal(checkParams1Responce);
+        done();
+      });
+  });
+  it('have return invalid params error error as result of throw InvalidParamsError inside RPC method', function (done) {
+    request.post('/')
+      .send(checkParams2Query)
+      .end(function (err, res) {
+        expect(JSON.parse(res.text)).to.be.deep.equal(checkParams2Responce);
         done();
       });
   });

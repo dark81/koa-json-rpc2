@@ -38,9 +38,26 @@ jrpc2.use('sum', function* sum(params) {
 // Add context information that's useful throughout the lifetime of application 
 app.context.some_string = 'context string';
 
-jrpc2.use('ctx', function* user() {
+jrpc2.use('ctx', function* ctx() {
   // Get access to context information inside rpc method
   return this.app.context.some_string;
+});
+
+
+// Exception handling
+
+jrpc2.use('internal', function* internal() {
+  // Return JSON-RPC2 Internal Error response as result of exception inside RPC method
+  throw new Error();
+});
+
+jrpc2.use('checkParams', function* checkParams(params) {
+  if (params && Object.prototype.hasOwnProperty.call(params, 'foo')) {
+    return params.foo;
+  }
+  // Return JSON-RPC2 Invalid Parameters Error response 
+  // as result of InvalidParamsError exception inside RPC method
+  throw new koaJsonRpc2.InvalidParamsError('Param foo omitted');
 });
 
 // Register rpc router as koa middleware

@@ -25,8 +25,15 @@ jrpc2.use('internal', function* internal() {
 
 app.context.some_string = 'context string';
 
-jrpc2.use('ctx', function* user() {
+jrpc2.use('ctx', function* ctx() {
   return this.app.context.some_string;
+});
+
+jrpc2.use('checkParams', function* checkParams(params) {
+  if (params && Object.prototype.hasOwnProperty.call(params, 'foo')) {
+    return params.foo;
+  }
+  throw new koaJsonRpc2.InvalidParamsError('Param foo omitted');
 });
 
 app.use(jrpc2.app());

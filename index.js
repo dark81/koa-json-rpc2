@@ -5,6 +5,28 @@ var debug = require('debug')('koa-json-rpc2');
 var JsonRpcError = require('json-rpc-error');
 var JsonRpcResponse = require('json-rpc-response');
 
+function InvalidParamsError(message) {
+  var caption;
+  var stack;
+  Error.call(this);
+  this.name = 'InvalidParamsError';
+  this.message = message;
+  stack = (new Error()).stack.split('\n');
+  if (message) {
+    caption = this.name + ': ' + message;
+  }
+  else {
+    caption = this.name;
+  }
+  stack.splice(0, 2, caption);
+  this.stack = stack.join('\n');
+}
+InvalidParamsError.prototype = Object.create(Error.prototype);
+InvalidParamsError.prototype.constructor = InvalidParamsError;
+InvalidParamsError.prototype.toString = function () {
+  return this.stack;
+}
+
 function koaJsonRpc2() {
   var registry = Object.create(null);
   return {
@@ -52,7 +74,13 @@ function koaJsonRpc2() {
           result = yield registry[body.method].call(this, body.params);
         }
         catch (e) {
-          debug('In method "%s" error: "%s"', body.method, e.name);
+          debug('In method "%s" error: "%s"', body.method, e);
+          if (e instanceof InvalidParamsError) {
+            this.body = new JsonRpcResponse(
+              body.id,
+              new JsonRpcError.InvalidParams(e.message));
+            return;
+          }
           this.body = new JsonRpcResponse(
             body.id,
             new JsonRpcError.InternalError(e.message));
@@ -69,3 +97,4 @@ function koaJsonRpc2() {
 }
 
 module.exports = koaJsonRpc2;
+module.exports.InvalidParamsError = InvalidParamsError;
