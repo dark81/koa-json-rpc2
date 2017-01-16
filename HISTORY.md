@@ -1,3 +1,10 @@
+0.1.1 / 2017-01-16
+==================
+
+ * add JSON-RPC response in case of internal error
+ * handle InvalidParamsError exception inside RPC method
+
+
 0.1.0 / 2017-01-09
 ==================
 
