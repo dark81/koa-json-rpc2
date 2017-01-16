@@ -1,4 +1,4 @@
-0.1.1 / 2017-01-16
+0.2.0 / 2017-01-16
 ==================
 
  * add JSON-RPC response in case of internal error
