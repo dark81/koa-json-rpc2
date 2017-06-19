@@ -19,7 +19,9 @@ var app = koa();
 var koaJsonRpc2 = require('koa-json-rpc2');
 
 // Create rpc router instance
-var jrpc2 = koaJsonRpc2();
+// Option 'limit' to set maximum post size
+// Limit is 1mb by default
+var jrpc2 = koaJsonRpc2({ limit: '20mb' });
 
 // Register new rpc function
 jrpc2.use('user', function* user() {
