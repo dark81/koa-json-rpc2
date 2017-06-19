@@ -142,6 +142,27 @@ var checkParams2Responce = {
   id: 21,
 };
 
+var checkBigJsonQuery = {
+  jsonrpc: '2.0',
+  method: 'testBigJson',
+  payload: [],
+  id: 80,
+};
+
+var checkBigJsonResponce = {
+  jsonrpc: '2.0',
+  result: 'Ok',
+  id: 80,
+};
+
+var i;
+var j;
+for (i = 0; i < 512; i += 1) {
+  for (j = 0; j < 1024; j += 1) {
+    checkBigJsonQuery.payload.push(j);
+  }
+}
+
 describe('koa-json-rpc2', function () {
   it('return parse error on non-json call', function (done) {
     request.post('/')
@@ -220,6 +241,17 @@ describe('koa-json-rpc2', function () {
       .send(checkParams2Query)
       .end(function (err, res) {
         expect(JSON.parse(res.text)).to.be.deep.equal(checkParams2Responce);
+        done();
+      });
+  });
+  it('should handle large sized JSONs', function (done) {
+    request.post('/')
+      .send(checkBigJsonQuery)
+      .end(function (err, res) {
+        if (err) {
+          done(err);
+        }
+        expect(JSON.parse(res.text)).to.be.deep.equal(checkBigJsonResponce);
         done();
       });
   });

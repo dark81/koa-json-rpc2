@@ -27,8 +27,18 @@ InvalidParamsError.prototype.toString = function toString() {
   return this.stack;
 };
 
-function koaJsonRpc2() {
+function koaJsonRpc2(options) {
+  var limit;
   var registry = Object.create(null);
+
+  if (options) {
+    limit = options.limit;
+  }
+
+  if (!limit) {
+    limit = '1mb';
+  }
+
   return {
     use: function (name, func) {
       if (registry[name]) {
@@ -44,7 +54,7 @@ function koaJsonRpc2() {
         var body;
         var result;
         try {
-          body = yield parse.json(this);
+          body = yield parse.json(this, { limit: limit });
         }
         catch (err) {
           debug('Failed to parse body as JSON %O', err);

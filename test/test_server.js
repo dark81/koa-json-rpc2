@@ -6,7 +6,7 @@ var app = module.exports = koa();
 
 var koaJsonRpc2 = require('../index');
 
-var jrpc2 = koaJsonRpc2();
+var jrpc2 = koaJsonRpc2({ limit: '20mb' });
 
 jrpc2.use('user', function* user() {
   return 'root';
@@ -34,6 +34,10 @@ jrpc2.use('checkParams', function* checkParams(params) {
     return params.foo;
   }
   throw new koaJsonRpc2.InvalidParamsError('Param foo omitted');
+});
+
+jrpc2.use('testBigJson', function* testBigJson() {
+  return 'Ok';
 });
 
 app.use(jrpc2.app());
